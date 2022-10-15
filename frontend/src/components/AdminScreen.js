@@ -4,6 +4,7 @@ import { useState} from 'react';
 import Notification from "./Notification";
 import './../App.css';
 import UploadStockForm from "./UploadStockForm";
+import StockSummary from "./StockSummary";
 const AdminScreen = () => {
     const [message, setMessage] = useState('');
     
@@ -11,7 +12,7 @@ const AdminScreen = () => {
         <Container fluid >
             <Notification message={message} />
             <UploadStockForm setMessage={setMessage}/>
-            
+            <StockSummary message={message} />
         </Container>
     );
 }

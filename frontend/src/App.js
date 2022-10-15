@@ -7,15 +7,25 @@ import UserScreen from './components/UserScreen';
 import AdminScreen from './components/AdminScreen';
 import './App.css';
 const App = () => {
+
+  const [role, setRole] = useState('user')
+    const [isUser, setIsUser] = useState(true);
+    
+
+    useEffect(() => {
+      setIsUser(role =='user');
+    }, [role])
+
+
   return (
     <div>
       <Container className='App'>
-        <Header />
-        {/* <UserScreen /> */}
-        <AdminScreen />
+        <Header role={role} setRole={setRole}/>
+        {isUser && <UserScreen/>}
+        {!isUser && <AdminScreen />}
         <Footer />
       </Container>
-    </div>
+      </div>
   );
 }
 
