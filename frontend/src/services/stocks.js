@@ -9,6 +9,12 @@ const getStockNames = async () => {
     return response.data;
 }
 
+const getStocksSummary = async () => {
+    const url = `${baseUrl}/summary`
+    const response = await axios.get(url);
+    return response.data;
+}
+
 const getRequiredStocks = async (stockName, startDate, endDate) => {
     const url = `${baseUrl}/between`
     const response = await axios.post(url, {stockName, startDate, endDate});
@@ -21,4 +27,4 @@ const uploadCSV = async (csvData) => {
     return response.data;
 }
 
-export default { getStockNames, getRequiredStocks, uploadCSV };
+export default { getStockNames, getRequiredStocks, uploadCSV, getStocksSummary };

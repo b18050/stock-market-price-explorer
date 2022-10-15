@@ -1,10 +1,4 @@
-const dbConfig = {
-    HOST: "localhost",
-    USER: "root",
-    PASSWORD: "password",
-    DB: "stockdb",
-    dialect: "mysql"
-};
+const dbConfig = require( "../config/db.config.js");
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
@@ -14,5 +8,6 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 const db = {}
 
 db.sequelize = sequelize;
+
 db.stocks = require("./stock.model.js")(sequelize);
 module.exports = db;

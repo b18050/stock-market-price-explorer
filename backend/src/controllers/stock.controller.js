@@ -4,6 +4,7 @@ const { Op } = require("sequelize")
 const Sequelize = require("sequelize");
 
 const db = require("../models");
+
 const Stock = db.stocks;
 
 const uploadCSV = async (req, res) => {
@@ -19,7 +20,6 @@ const uploadCSV = async (req, res) => {
             .on("error", (error) => {
                 console.log("Only CSV format is supported")
                 res.status(403).send({
-                    //Forbidden request
                     message: "Please upload valid stocks data in CSV format",
                     error: error.message,
                 })
@@ -120,9 +120,49 @@ const getStockNames = (req, res) => {
         });
 }
 
+const getStockSummary = (req, res) => {
+    Stock.findAll({
+        attributes: ['TIMESTAMP', [Sequelize.fn('count', Sequelize.col('TIMESTAMP')), 'count']],
+        group : ['Stock.TIMESTAMP'],
+        raw: true,
+        order: [
+            ['TIMESTAMP', 'ASC']
+        ]
+      })
+    .then((cnt) => {
+        res.send(cnt);
+    })
+    .catch((err) => {
+        res.status(500).send({
+            message: err.message || "Some error occurred getting stock names"
+        });
+    });
+}
+
+const getDates = (req, res) => {
+    Stock.findAll({
+        attributes: [
+            [Sequelize.fn('DISTINCT', Sequelize.col('TIMESTAMP')) ,'TIMESTAMP']
+      ],
+      order: [
+        ['TIMESTAMP', 'ASC']
+        ]
+    })
+    .then((stock) => {
+        res.send(stock);
+    }) 
+    .catch((err) => {
+        res.status(500).send({
+            message: err.message || "Some error occurred getting stock names"
+        });
+    });
+}
+
 module.exports = {
     uploadCSV,
     getAllStocks,
     getStocksBetweenRange,
-    getStockNames
+    getStockNames, 
+    getStockSummary,
+    getDates
 };
