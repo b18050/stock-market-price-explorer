@@ -101,10 +101,28 @@ const getStocksBetweenRange = (req, res) => {
         });
     }
     
-} 
+}
+
+const getStockNames = (req, res) => {
+    Stock.findAll({
+        // limit: 100,
+        attributes: [
+        [Sequelize.fn('DISTINCT', Sequelize.col('SYMBOL')) ,'SYMBOL'],
+    ]
+        })
+        .then((stock) => {
+            res.send(stock);
+        }) 
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred getting stock names"
+            });
+        });
+}
 
 module.exports = {
     uploadCSV,
     getAllStocks,
-    getStocksBetweenRange
+    getStocksBetweenRange,
+    getStockNames
 };
