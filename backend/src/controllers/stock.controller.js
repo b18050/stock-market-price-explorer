@@ -56,6 +56,55 @@ const uploadCSV = async (req, res) => {
     }
 }
 
+const getAllStocks = (req, res) => {
+    Stock.findAll()
+        .then((stock) => {
+            res.send(stock);
+        }) 
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred getting stocks"
+            });
+        });
+}
+
+const getStocksBetweenRange = (req, res) => {
+    try{
+        console.log(req.body)
+        const startDate = req.body.startDate;
+        const endDate = req.body.endDate;
+        const stockName = req.body.stockName;
+        console.log(startDate)
+        Stock.findAll({
+            where: {
+                TIMESTAMP: {
+                    [Op.between] : [startDate, endDate]
+                },
+                SYMBOL: stockName
+            },
+            order: [
+                ['TIMESTAMP', 'ASC']
+            ],
+        })
+        .then((stock) => {
+            res.send(stock);
+        }) 
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred getting stocks"
+            });
+        });
+    } catch(error) {
+        console.log(error);
+        res.status(500).send({
+            message: "Query failed: " + req.startDate
+        });
+    }
+    
+} 
+
 module.exports = {
-    uploadCSV
+    uploadCSV,
+    getAllStocks,
+    getStocksBetweenRange
 };
