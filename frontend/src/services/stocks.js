@@ -15,4 +15,10 @@ const getRequiredStocks = async (stockName, startDate, endDate) => {
     return response.data;
 } 
 
-export default { getStockNames, getRequiredStocks };
+const uploadCSV = async (csvData) => {
+    const url = `${baseUrl}/upload`
+    const response = await axios.post(url, csvData)
+    return response.data;
+}
+
+export default { getStockNames, getRequiredStocks, uploadCSV };

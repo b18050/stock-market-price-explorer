@@ -4,14 +4,15 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import UserScreen from './components/UserScreen';
+import AdminScreen from './components/AdminScreen';
 import './App.css';
 const App = () => {
   return (
     <div>
       <Container className='App'>
         <Header />
-        <UserScreen />
-        
+        {/* <UserScreen /> */}
+        <AdminScreen />
         <Footer />
       </Container>
     </div>
