@@ -10,7 +10,8 @@ const UserScreen = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [stockName, setStockName] = useState("");
-        
+    const [chartType, setChartType] = useState('bar');
+
     useEffect(() => {
       if(startDate == null) return;
       stockService.getRequiredStocks(stockName, startDate, endDate)
@@ -21,6 +22,8 @@ const UserScreen = () => {
     return (
         <Container fluid>
           <StockForm   
+            chartType={chartType} 
+            setChartType={setChartType}
             startDate={startDate} 
             endDate={endDate} 
             stockName={stockName} 
@@ -28,7 +31,7 @@ const UserScreen = () => {
             setEndDate={setEndDate} 
             setStockName={setStockName}
             />
-            <ShowStock stocks={stocks} stockName={stockName} />
+            <ShowStock stocks={stocks} stockName={stockName} chartType={chartType} />
         </Container>
         
     );

@@ -78,19 +78,30 @@ const ShowStock = ({stocks, stockName, chartType}) => {
         setBarType(chartType == 'bar')
     }, [stocks, stockName, chartType])
 
- 
-    return (
-        
-        <div className="chartTable">
-           
-            
-              {haveData &&  <Bar 
+    const ShowChart = () => {
+
+      if(!haveData) return null;
+      return <>
+        {!barType && <Line 
                     data={data}
                     options={options}
                     width={50}
                     height={20}  
-                />
-              }
+                    />}
+        {barType && <Bar 
+            data={data}
+            options={options}
+            width={50}
+            height={20}  
+        />
+        }
+                    </>
+    }
+ 
+    return (
+        
+        <div className="chartTable">
+           <ShowChart />
         </div>
     )
 }

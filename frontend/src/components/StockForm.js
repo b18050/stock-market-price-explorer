@@ -6,8 +6,8 @@ import {
     Typeahead
   } from 'react-bootstrap-typeahead';
 
-  import 'react-bootstrap-typeahead/css/Typeahead.css';
-const StockForm = ({stockName, startDate, endDate, setStartDate,  setEndDate, setStockName}) => {
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+const StockForm = ({chartType, setChartType, stockName, startDate, endDate, setStartDate,  setEndDate, setStockName}) => {
 
     const [stockNames, setStockNames] = useState([]);
 
@@ -58,6 +58,17 @@ const StockForm = ({stockName, startDate, endDate, setStartDate,  setEndDate, se
                             </Form.Control>
                     </Form.Group>
                 </Col>
+                <Col md={2} style={{ textAlign: 'center', marginTop: 40}} >
+                <Form>
+                    <Form.Group>
+                    <Form.Label style={{ fontFamily: 'sans-serif'}}> Select Chart type </Form.Label>
+                        <Form.Control as="select" custom onChange={(e) => setChartType(e.target.value)} value ={chartType}>
+                            <option value="bar"> Bar Graph </option>
+                            <option value="line"> Line Graph </option>
+                        </Form.Control>
+                    </Form.Group>
+                </Form>
+            </Col>
                 
         </Row>
     )
