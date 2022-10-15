@@ -7,7 +7,6 @@ import {
   } from 'react-bootstrap-typeahead';
 
   import 'react-bootstrap-typeahead/css/Typeahead.css';
-  const options = ['ll', 'df', 'dfd', '3PLAND'];
 const StockForm = ({stockName, startDate, endDate, setStartDate,  setEndDate, setStockName}) => {
 
     const [stockNames, setStockNames] = useState([]);
