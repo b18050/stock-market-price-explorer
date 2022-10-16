@@ -7,7 +7,7 @@ const Notification = ({message}) => {
     if(message === '') {
       return (null)
     }
-    if(message.includes('failed')){
+    if(!message.includes('success')){
         return (
             <Row className="error" >
                 {message}

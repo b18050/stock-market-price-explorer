@@ -16,6 +16,11 @@ stockRoutes(app);
 //   console.log("Drop and re-sync db.");
 // });
 
+const jsonErrorHandler = (err, req, res, next) => {
+  res.status(500).send({ error: err });
+}
+app.use(jsonErrorHandler)
+
 let port = 8080;
 
 db.sequelize.sync();

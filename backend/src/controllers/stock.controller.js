@@ -14,15 +14,10 @@ const uploadCSV = async (req, res) => {
         }
         let stocks = [];
         let path = __basedir + "/resources/uploads/" + req.file.filename;
-        console.log(req.file.filename);
         fs.createReadStream(path)
             .pipe(csv.parse({ headers: true }))
             .on("error", (error) => {
-                console.log("Only CSV format is supported")
-                res.status(403).send({
-                    message: "Please upload valid stocks data in CSV format",
-                    error: error.message,
-                })
+                res.status(403).send("Please upload valid stocks data in CSV format")
             })
             .on("data", (row) => {
                 if(row.SERIES == "EQ"){

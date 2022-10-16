@@ -21,13 +21,9 @@ const UploadStockForm = ({setMessage}) => {
                 },5000)  
                 })
             .catch(error => {
+                console.log(error.response.data.error)
                 console.log(error.code)
-                if(error.code == 'ERR_BAD_REQUEST'){
-                    setMessage('Upload failed! Please upload stocks data in CSV format  only.')
-                }
-                else {
-                    setMessage(error.message)
-                }
+                setMessage(error.response.data.error)
                 setTimeout(() => {
                     setMessage('')
                 },5000)  
