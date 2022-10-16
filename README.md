@@ -14,7 +14,7 @@ References : [Doc link](https://www.bezkoder.com/node-js-upload-csv-file-databas
 
 ## 🚀 Quick start
 
-In this project, local database is used `MySQL` srver is used.
+In this project, local database hosted on `MySQL` server is used.
 Database config:
 ```shell
     HOST: "localhost"
@@ -46,6 +46,8 @@ Start the frontend in the browser:
 ```
 
 You will see something like this:
+![Screenshot 2022-10-16 at 3 45 59 PM](https://user-images.githubusercontent.com/45814442/196029998-26e58374-f959-4553-9e16-09bac39cb53b.png)
+	
 
 ## 🧐  Quick brief about the codebase
 
