@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, Table, Row } from "react-bootstrap";
+import {  Table } from "react-bootstrap";
 import { useState, useEffect} from 'react';
 import './../App.css';
 import stockService from './../services/stocks'; 
-import axios from "axios";
+
 
 const StockSummary = ({message}) => {
 

@@ -1,31 +1,40 @@
 
 import React, {useEffect, useState} from "react";
 import {  Row, Col, Form } from "react-bootstrap";
-import stockService from './../services/stocks'; 
-import {
-    Typeahead
-  } from 'react-bootstrap-typeahead';
-
+import { useDispatch, useSelector }  from 'react-redux';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-const StockForm = ({chartType, setChartType, stockName, startDate, endDate, setStartDate,  setEndDate, setStockName}) => {
+import { chartTypeChange } from "./../reducers/chartTypeReducer";
+import { getRequiredStocks, setStockName } from "../reducers/stockReducer";
 
-    const [stockNames, setStockNames] = useState([]);
+const StockForm = () => {
 
-    useEffect(() => {
-        stockService.getStockNames()
-            .then((data) => {
-                setStockNames(data)
-            }
-        );
-    },[]);
-    const getNames = (stock) => {
-        return stock.SYMBOL;
+    const dispatch = useDispatch()
+    const chartType = useSelector(state => state.chartType)
+    const stockName = useSelector(state => state.stock.stockName);
+    const stockNames = useSelector(state => state.stock.names);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+    const handleChartTypeChange = (event) => {
+        const chosenChartType = event.target.value;
+        dispatch(chartTypeChange(chosenChartType))
     }
+    const handleStockNameChange = (value) => {
+        const chosenStockName = value;
+        dispatch(setStockName(chosenStockName))
+    }
+    
     const [options, setOptions] = useState([]);
+    
     useEffect(() => {
-        setOptions(stockNames.map(getNames))
-        console.log(options)
+        setOptions(stockNames.map(stock => stock.SYMBOL))
     },[stockNames]);
+
+    useEffect(() => {
+        if(stockName == '' || startDate == null) return;
+        dispatch(getRequiredStocks(stockName, startDate, endDate));
+    }, [stockName, startDate, endDate, dispatch]);
     return(
         <Row className="justify-content-center">
                 <Col md={3} style={{ textAlign: 'center', marginTop: 40}}>
@@ -37,7 +46,7 @@ const StockForm = ({chartType, setChartType, stockName, startDate, endDate, setS
                             paginate={false}
                             placeholder="Choose your stock here..."
                             selected={stockName}
-                            onChange={setStockName}
+                            onChange={handleStockNameChange}
                             options={options}
                         />
                     </Form.Group>
@@ -62,9 +71,9 @@ const StockForm = ({chartType, setChartType, stockName, startDate, endDate, setS
                 <Form>
                     <Form.Group>
                     <Form.Label style={{ fontFamily: 'sans-serif'}}> Select Chart type </Form.Label>
-                        <Form.Control as="select" custom onChange={(e) => setChartType(e.target.value)} value ={chartType}>
-                            <option value="bar"> Bar Graph </option>
-                            <option value="line"> Line Graph </option>
+                        <Form.Control as="select" custom onChange={handleChartTypeChange} value ={chartType} defaultValue="BAR">
+                            <option value="BAR"> Bar Graph </option>
+                            <option value="LINE"> Line Graph </option>
                         </Form.Control>
                     </Form.Group>
                 </Form>

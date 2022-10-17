@@ -5,24 +5,30 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import UserScreen from './components/UserScreen';
 import AdminScreen from './components/AdminScreen';
+import { useSelector }  from 'react-redux';
+
 import './App.css';
 const App = () => {
+  
+  const [isUser, setIsUser] = useState(true);
+  const role = useSelector(state => state.role);
 
-  const [role, setRole] = useState('user')
-    const [isUser, setIsUser] = useState(true);
-    
+  useEffect(() => {
+    setIsUser( role == 'USER')
+  }, [role])
 
-    useEffect(() => {
-      setIsUser(role =='user');
-    }, [role])
-
+  const BodyComponent = () => {
+      if(isUser) {
+        return <UserScreen />
+      }
+      return <AdminScreen />
+  }
 
   return (
     <div>
       <Container className='App'>
-        <Header role={role} setRole={setRole}/>
-        {isUser && <UserScreen/>}
-        {!isUser && <AdminScreen />}
+        <Header />
+        <BodyComponent />
         <Footer />
       </Container>
       </div>

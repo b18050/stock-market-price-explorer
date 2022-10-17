@@ -1,16 +1,16 @@
 import React from "react";
 import {Row, Col, Form} from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons';
-import {
-    Typeahead
-  } from 'react-bootstrap-typeahead';
-
-  import 'react-bootstrap-typeahead/css/Typeahead.css';
-const Header = ({role, setRole}) => {
-
+import { roleChange } from './../reducers/roleReducer';
+import { useDispatch, useSelector }  from 'react-redux';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+const Header = () => {
+    const dispatch = useDispatch()
+    const role = useSelector(state => state.role);
+    
     const ShowPersonIcon = () => {
         console.log(role);
-        if(role == 'user'){
+        if(role == 'USER'){
             return (
                 <Col md={{ span: 1, offset: 1 }} >
                 <Icon.PersonCircle />
@@ -23,7 +23,11 @@ const Header = ({role, setRole}) => {
         </Col>
         );
     }
-    const options = ["User", "Admin"];
+
+    const handleRoleChange = (event) => {
+        const chosenRole = event.target.value;
+        dispatch(roleChange(chosenRole))
+    }
     
     return (
             <Row className="App-header">
@@ -33,10 +37,10 @@ const Header = ({role, setRole}) => {
                 <Col md={{ span: 2, offset: 3 }} >
                 <Form>
                     <Form.Group className="role-select">
-                        <Form.Control as="select" custom onChange={(e) => setRole(e.target.value)} value ={role} defaultValue="User">
-                            <option value="user"> User 
+                        <Form.Control as="select" custom onChange={handleRoleChange} value ={role} defaultValue="User">
+                            <option value="USER"> User 
                             </option>
-                            <option value="admin"> Admin </option>
+                            <option value="ADMIN"> Admin </option>
                         </Form.Control>
 
                     </Form.Group>
